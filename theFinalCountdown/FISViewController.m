@@ -9,6 +9,11 @@
 #import "FISViewController.h"
 
 @interface FISViewController ()
+@property (strong, nonatomic) IBOutlet UIButton *startButton;
+@property (strong, nonatomic) IBOutlet UIButton *pauseButton;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+@property (strong, nonatomic) IBOutlet UILabel *timerLabel;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 @end
 
@@ -17,8 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
+    
+    self.cancelButton.hidden = YES;
+    self.timerLabel.hidden = YES;
 
 
 	// Do any additional setup after loading the view, typically from a nib.
@@ -29,7 +35,33 @@
 
 
 }
+- (IBAction)startButton:(id)sender {
+    self.startButton.hidden = self.pauseButton.enabled = self.cancelButton.enabled = YES;
+    self.cancelButton.hidden = !self.startButton.hidden;
+    
+    self.timerLabel.hidden = NO;
+    self.datePicker.hidden = YES;
+    
+    self.datePicker.minuteInterval = self.datePicker.countDownDuration;
+    
+}
 
+- (IBAction)cancelButton:(id)sender {
+    
+    self.cancelButton.hidden = self.startButton.hidden;
+    self.startButton.hidden = NO;
+    self.pauseButton.enabled = NO;
+
+    self.timerLabel.hidden = YES;
+    self.datePicker.hidden = NO;}
+
+- (IBAction)pauseButton:(id)sender {
+    self.pauseButton.enabled = NO;
+    self.cancelButton.hidden = YES;
+    self.startButton.hidden = NO;
+    
+    
+}
 
 - (void)didReceiveMemoryWarning
 {
